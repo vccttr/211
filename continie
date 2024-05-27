@@ -1,0 +1,51 @@
+class DoorSprite(Sprite):
+def __init__(self, g, x, y, width, height):#hei1353
+Sprite.__init__(self, g)
+self.closed_door = PhotoImage(file="resources/door1.gif")
+self.open_door = PhotoImage(file="resources/door2.gif")
+self.image = g.canvas.create_image(x, y, image=self.closed_door, anchor='nw')
+self.coordinates = Coordinates(x, y, x + (width / 2), y + height)
+self.endgame = True
+
+def op_door(self):
+self.game.canvas.itemconfig(self.image, image=self.open_door)
+self.game.tk.update_idletasks()
+def cl_door(self):
+self.game.canvas.itemconfig(self.image, image=self.closed_door)
+self.game.tk.update_idletasks()
+class StickFigureSprite(Sprite):
+def __init__(self, g):
+Sprite.__init__(self, g)
+self.images_left = [
+PhotoImage(file="resources/figure-L1.gif"),
+PhotoImage(file="resources/figure-L2.gif"),
+PhotoImage(file="resources/figure-L3.gif")
+]
+self.images_right = [
+PhotoImage(file="resources/figure-R1.gif"),
+PhotoImage(file="resources/figure-R2.gif"),
+PhotoImage(file="resources/figure-R3.gif")
+]
+self.image = g.canvas.create_image(200, 470, \
+image=self.images_left[0], anchor='nw')
+self.x = -2
+self.y = 0
+self.current_image = 0
+self.current_image_add = 1
+self.jump_count = 0
+self.last_time = time.time()
+self.coordinates = Coordinates()
+g.canvas.bind_all('<KeyPress-Left>', self.turn_left)
+g.canvas.bind_all('<KeyPress-Right>', self.turn_right)
+g.canvas.bind_all('<space>', self.jump)
+def turn_left(self, evt):
+if self.y == 0:
+self.x = -2
+def turn_right(self, evt):
+if self.y == 0:
+self.x = 2
+#brought to you by code-projects.org
+def jump(self, evt):
+if self.y == 0:
+self.y = -4
+self.jump_count = 0
